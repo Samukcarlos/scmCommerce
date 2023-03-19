@@ -13,7 +13,7 @@ public class Categoria {
  @GeneratedValue(strategy = GenerationType.IDENTITY) // para qie id seja auto incrementada
    Integer id;
    String descricao;
-    @OneToMany(mappedBy = "categoria") // mapeamento muitos para um. inclui na tabela Order um campo na chave estrangeira
+    @OneToMany(mappedBy = "categoria_id") // mapeamento muitos para um. inclui na tabela Order um campo na chave estrangeira
     private List<Atividade> atividades = new ArrayList<>(); // lado do "um para muintos" como são muitos precisa de uma lista.
     // na classe User tenho uma lista de orders.
    public Categoria(){
@@ -44,4 +44,5 @@ public class Categoria {
     public List<Atividade> getAtividades() { // para conseguir acessar a lista de atividades do relacionamento muitos para um
         return atividades;
     }
+
 }

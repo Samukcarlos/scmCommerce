@@ -1,6 +1,8 @@
 package com.scm.scmcommerce.entities;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_atividades") //Personalisando o nome da tabela no H2
@@ -14,9 +16,18 @@ public class Atividade {
     private Integer id;
     private String nome;
     private Double preco;
-    @ManyToOne
-    @JoinColumn(name = "categoria_id") // relacionamento muitos para um
-    private Categoria categoria;
+    private Participante participante;
+
+    @ManyToMany(mappedBy = "atividades") // Relação muitos para muitos
+    private Set<Bloco> blocos = new HashSet<>();// No caso de muitos para muitos para que não haja repetição
+    // de id, precisamos informar isso para o JPA usando "Set" ao invés de List
+    @ManyToOne // mapeando muitos para um no banco de dados.
+    @JoinColumn(name = "categoria_id") // inclui um campo na tabela orde com o nome da chave estrangeira client_id (lado do "munitos")
+
+
+    @ManyToMany(mappedBy = "atividades") // Relação muitos para muitos
+    private Set<Participante> participantes = new HashSet<>();// No caso de muitos para muitos para que não haja repetição
+    // de id, precisamos informar isso para o JPA usando "Set" ao invés de List
 
 
     public Atividade(){
@@ -52,4 +63,13 @@ public class Atividade {
     public void setPreco(Double preco) {
         this.preco = preco;
     }
+
+    public Set<Bloco> getBlocos() {
+        return blocos;
+    }
+
+    public Set<Participante> getParticipantes() {
+        return participantes;
+    }
 }
+
